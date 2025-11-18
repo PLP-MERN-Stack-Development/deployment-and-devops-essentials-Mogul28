@@ -44,7 +44,18 @@ if (process.env.NODE_ENV === 'production') {
 // MongoDB connection with connection pooling
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+    // Validate MONGODB_URI is set
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI is not defined in environment variables');
+    }
+
+    // Trim whitespace and validate format
+    const mongoUri = process.env.MONGODB_URI.trim();
+    if (!mongoUri.startsWith('mongodb://') && !mongoUri.startsWith('mongodb+srv://')) {
+      throw new Error(`Invalid MongoDB URI format. Must start with "mongodb://" or "mongodb+srv://". Got: ${mongoUri.substring(0, 20)}...`);
+    }
+
+    const conn = await mongoose.connect(mongoUri, {
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
@@ -52,6 +63,9 @@ const connectDB = async () => {
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('MongoDB connection error:', error.message);
+    if (error.message.includes('MONGODB_URI')) {
+      console.error('Please set MONGODB_URI environment variable in your deployment platform.');
+    }
     process.exit(1);
   }
 };
