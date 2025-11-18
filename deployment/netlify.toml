@@ -1,0 +1,19 @@
+[build]
+  base = "frontend"
+  publish = "dist"
+  command = "npm install && npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  VITE_API_URL = "https://your-backend-url.com"
+
+[context.deploy-preview.environment]
+  VITE_API_URL = "https://your-backend-staging-url.com"
+
