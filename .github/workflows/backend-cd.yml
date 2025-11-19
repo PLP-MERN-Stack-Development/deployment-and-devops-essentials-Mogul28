@@ -15,10 +15,10 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
 
@@ -35,18 +35,20 @@ jobs:
         run: npm test
 
       # Render Auto-Deploy: Render automatically deploys when you push to main
-      # Configure Render to watch your GitHub repo for automatic deployments
+      # No GitHub Action needed - configure Render to watch your GitHub repo
       # See RENDER_AUTO_DEPLOY.md for setup instructions
+      # 
+      # To enable auto-deploy:
+      # 1. Go to Render dashboard → Your service → Settings
+      # 2. Under "Build & Deploy", connect your GitHub repository
+      # 3. Set "Auto-Deploy" to "Yes"
+      # 4. Render will automatically deploy on every push to main
       
-      - name: Trigger Render Deployment (Optional)
-        if: success() && secrets.RENDER_SERVICE_ID != '' && secrets.RENDER_API_KEY != ''
+      - name: Render Auto-Deploy Info
         run: |
-          echo "Triggering Render deployment via API..."
-          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
-            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
-            -H "Content-Type: application/json" \
-            -f -s -S || echo "Note: Render will auto-deploy on git push if configured in dashboard"
-        continue-on-error: true
+          echo "✅ Tests passed!"
+          echo "📦 Render will auto-deploy on git push if configured in dashboard"
+          echo "📚 See RENDER_AUTO_DEPLOY.md for setup instructions"
 
       # Alternative: Deploy to Railway
       # - name: Deploy to Railway
