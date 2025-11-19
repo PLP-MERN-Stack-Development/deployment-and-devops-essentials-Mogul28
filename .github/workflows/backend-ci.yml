@@ -49,8 +49,9 @@ jobs:
       - name: Run tests
         working-directory: ./backend
         env:
-          MONGODB_URI: mongodb://localhost:27017/test
-          JWT_SECRET: test-secret-key
+          MONGODB_URI: mongodb://127.0.0.1:27017/mern-test
+          JWT_SECRET: test-jwt-secret-key-for-testing-only-minimum-32-chars
+          JWT_EXPIRE: 7d
           NODE_ENV: test
         run: npm test
 

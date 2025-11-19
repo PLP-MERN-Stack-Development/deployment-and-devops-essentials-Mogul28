@@ -36,23 +36,35 @@ app.use(errorHandler);
 describe('Auth Routes', () => {
   beforeAll(async () => {
     // Connect to test database
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/mern-test';
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(mongoUri, {
-        maxPoolSize: 5,
-        serverSelectionTimeoutMS: 5000,
-      });
+    // Use MONGODB_URI from environment (set in CI) or fallback to localhost
+    const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mern-test';
+    
+    try {
+      if (mongoose.connection.readyState === 0) {
+        await mongoose.connect(mongoUri, {
+          maxPoolSize: 5,
+          serverSelectionTimeoutMS: 10000,
+          socketTimeoutMS: 45000,
+        });
+        console.log('Connected to test database');
+      }
+    } catch (error) {
+      console.error('Failed to connect to test database:', error.message);
+      throw error;
     }
-  });
+  }, 30000); // Increase timeout for database connection
 
   afterAll(async () => {
-    // Clean up
-    await User.deleteMany({});
-    // Close all connections
-    await mongoose.connection.close();
-    // Give time for connections to close
-    await new Promise(resolve => setTimeout(resolve, 500));
-  });
+    try {
+      // Clean up
+      if (mongoose.connection.readyState === 1) {
+        await User.deleteMany({});
+        await mongoose.connection.close();
+      }
+    } catch (error) {
+      console.error('Error during cleanup:', error.message);
+    }
+  }, 10000);
 
   describe('POST /api/auth/register', () => {
     it('should register a new user', async () => {

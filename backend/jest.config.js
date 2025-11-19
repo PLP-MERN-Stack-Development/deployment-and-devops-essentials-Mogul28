@@ -15,6 +15,8 @@ module.exports = {
   setupFilesAfterEnv: [],
   verbose: true,
   forceExit: true,
-  testTimeout: 10000
+  testTimeout: 30000, // Increased for database operations
+  globalSetup: undefined,
+  globalTeardown: undefined
 };
 
