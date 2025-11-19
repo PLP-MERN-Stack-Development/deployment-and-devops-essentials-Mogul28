@@ -16,6 +16,12 @@ const protect = async (req, res, next) => {
   }
 
   try {
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({
+        success: false,
+        error: 'Server configuration error: JWT_SECRET not set'
+      });
+    }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = await User.findById(decoded.id).select('-password');
     

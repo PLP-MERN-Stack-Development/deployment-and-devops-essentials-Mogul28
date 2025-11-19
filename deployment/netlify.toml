@@ -6,14 +6,22 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# SPA routing - redirect all routes to index.html
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+# Production environment variables
+# Update VITE_API_URL with your Render backend URL
 [context.production.environment]
-  VITE_API_URL = "https://your-backend-url.com"
+  VITE_API_URL = "https://your-backend.onrender.com"
 
+# Deploy preview environment (for pull requests)
 [context.deploy-preview.environment]
-  VITE_API_URL = "https://your-backend-staging-url.com"
+  VITE_API_URL = "https://your-backend.onrender.com"
+
+# Branch deploy environment
+[context.branch-deploy.environment]
+  VITE_API_URL = "https://your-backend.onrender.com"
 

@@ -8,6 +8,34 @@ const rateLimit = require('express-rate-limit');
 const errorHandler = require('./middleware/errorHandler');
 require('dotenv').config();
 
+// Validate required environment variables
+const requiredEnvVars = ['MONGODB_URI', 'JWT_SECRET'];
+const missingVars = requiredEnvVars.filter(varName => !process.env[varName] || process.env[varName].includes('your-') || process.env[varName].includes('change-this'));
+
+if (missingVars.length > 0 && process.env.NODE_ENV !== 'test') {
+  console.error('❌ Error: Missing or invalid required environment variables:');
+  missingVars.forEach(varName => {
+    console.error(`   - ${varName}`);
+  });
+  console.error('\nPlease set these in your .env file or environment variables.');
+  if (process.env.NODE_ENV === 'production') {
+    process.exit(1);
+  } else {
+    console.warn('⚠️  WARNING: Running with invalid environment variables. This is not secure for production!');
+  }
+}
+
+// Validate JWT_SECRET specifically
+if (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32) {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('❌ Error: JWT_SECRET must be set and at least 32 characters long for production!');
+    process.exit(1);
+  } else if (process.env.NODE_ENV !== 'test') {
+    console.warn('⚠️  WARNING: JWT_SECRET not set or too short. Using default (NOT SECURE FOR PRODUCTION)');
+    process.env.JWT_SECRET = process.env.JWT_SECRET || 'default-insecure-secret-change-in-production-min-32-chars';
+  }
+}
+
 const app = express();
 
 // Security middleware

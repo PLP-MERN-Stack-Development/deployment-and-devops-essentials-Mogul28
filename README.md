@@ -224,7 +224,22 @@ VITE_NODE_ENV=development
 
 ### Frontend Deployment
 
-#### Option 1: Vercel
+#### Option 1: Netlify (Recommended)
+
+1. Create account at [Netlify](https://netlify.com)
+2. Import from Git
+3. Configure:
+   - **Base directory**: `frontend`
+   - **Build command**: `npm install && npm run build`
+   - **Publish directory**: `frontend/dist`
+4. Add environment variables (especially `VITE_API_URL`)
+5. Deploy!
+
+**Deployed Frontend URL**: `https://your-app.netlify.app`
+
+See `NETLIFY_DEPLOYMENT.md` for detailed instructions.
+
+#### Option 2: Vercel
 
 1. Create account at [Vercel](https://vercel.com)
 2. Import your GitHub repository
@@ -237,17 +252,6 @@ VITE_NODE_ENV=development
 5. Deploy!
 
 **Deployed Frontend URL**: `https://your-app.vercel.app`
-
-#### Option 2: Netlify
-
-1. Create account at [Netlify](https://netlify.com)
-2. Import from Git
-3. Configure:
-   - **Base directory**: `frontend`
-   - **Build command**: `npm run build`
-   - **Publish directory**: `frontend/dist`
-4. Add environment variables
-5. Deploy!
 
 #### Option 3: GitHub Pages
 
@@ -286,7 +290,7 @@ The project includes GitHub Actions workflows for continuous integration and dep
 - **Frontend CD** (`.github/workflows/frontend-cd.yml`):
   - Runs on push to main
   - Builds application
-  - Deploys to Vercel/Netlify
+  - Deploys to Netlify (or Vercel)
 
 ### Setting Up GitHub Secrets
 
@@ -301,12 +305,12 @@ Add these secrets in your GitHub repository settings:
 - `HEROKU_API_KEY`: Heroku API key (if using Heroku)
 
 **Frontend Secrets:**
-- `VITE_API_URL`: Your deployed backend URL
-- `VERCEL_TOKEN`: Vercel token (if using Vercel)
-- `VERCEL_ORG_ID`: Vercel organization ID
-- `VERCEL_PROJECT_ID`: Vercel project ID
-- `NETLIFY_AUTH_TOKEN`: Netlify auth token (if using Netlify)
-- `NETLIFY_SITE_ID`: Netlify site ID
+- `VITE_API_URL`: Your deployed backend URL (e.g., `https://your-backend.onrender.com`)
+- `NETLIFY_AUTH_TOKEN`: Netlify auth token (optional - for GitHub Actions deployment)
+- `NETLIFY_SITE_ID`: Netlify site ID (optional - for GitHub Actions deployment)
+- `VERCEL_TOKEN`: Vercel token (if using Vercel instead)
+- `VERCEL_ORG_ID`: Vercel organization ID (if using Vercel)
+- `VERCEL_PROJECT_ID`: Vercel project ID (if using Vercel)
 
 ## 📊 Monitoring
 
@@ -467,9 +471,15 @@ Authorization: Bearer <token>
 
 After deployment, update this section with your URLs:
 
-- **Frontend URL**: `https://your-frontend-url.vercel.app`
-- **Backend URL**: `https://your-backend-url.onrender.com`
-- **API Health Check**: `https://your-backend-url.onrender.com/health`
+- **Frontend URL**: `https://your-app.netlify.app`
+- **Backend URL**: `https://your-backend.onrender.com`
+- **API Health Check**: `https://your-backend.onrender.com/health`
+
+## 🚀 Quick Deployment Guide
+
+See `DEPLOYMENT_GUIDE.md` for complete step-by-step instructions for deploying to:
+- **Frontend**: Netlify
+- **Backend**: Render
 
 ## 📸 CI/CD Screenshots
 
