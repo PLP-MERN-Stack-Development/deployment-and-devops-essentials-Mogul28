@@ -23,10 +23,12 @@ jobs:
           - 27017:27017
         options: >-
           --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 10
-          --health-start-period 40s
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 20
+          --health-start-period 30s
+        env:
+          MONGO_INITDB_DATABASE: mern-test
 
     steps:
       - name: Checkout code
@@ -50,19 +52,26 @@ jobs:
       - name: Wait for MongoDB
         run: |
           echo "Waiting for MongoDB to be ready..."
+          # Install netcat if not available
+          sudo apt-get update -qq
+          sudo apt-get install -y netcat-openbsd || sudo apt-get install -y nc || true
+          # Wait for MongoDB to be ready (max 60 seconds)
           n=0
-          until [ $n -ge 30 ]; do
-            if timeout 2 bash -c "cat < /dev/null > /dev/tcp/127.0.0.1/27017" 2>/dev/null; then
-              echo "MongoDB is ready!"
-              exit 0
-            fi
+          until nc -z 127.0.0.1 27017 || [ $n -ge 60 ]; do
+            echo "Waiting for MongoDB... ($n/60)"
+            sleep 1
             n=$((n+1))
-            echo "Waiting for MongoDB... ($n/30)"
-            sleep 2
           done
-          echo "MongoDB connection timeout - checking service status"
-          docker ps | grep mongo || echo "MongoDB container not found"
-          exit 1
+          if nc -z 127.0.0.1 27017; then
+            echo "✅ MongoDB port is open!"
+            # Give MongoDB a moment to fully initialize
+            sleep 2
+          else
+            echo "❌ MongoDB connection timeout after 60 seconds"
+            echo "Checking MongoDB container status:"
+            docker ps -a | grep mongo || echo "MongoDB container not found"
+            exit 1
+          fi
 
       - name: Run tests
         working-directory: ./backend

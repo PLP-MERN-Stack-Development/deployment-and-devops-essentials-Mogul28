@@ -45,27 +45,30 @@ describe('Auth Routes', () => {
     }
     
     // Retry connection logic for CI environments
-    let retries = 5;
+    let retries = 10; // Increased retries for CI
     let connected = false;
     
     while (retries > 0 && !connected) {
       try {
         await mongoose.connect(mongoUri, {
           maxPoolSize: 5,
-          serverSelectionTimeoutMS: 10000,
-          socketTimeoutMS: 30000,
-          connectTimeoutMS: 10000,
+          serverSelectionTimeoutMS: 15000, // Increased timeout
+          socketTimeoutMS: 45000,
+          connectTimeoutMS: 15000,
+          retryWrites: true,
         });
-        console.log('Connected to test database');
+        console.log(`✅ Connected to test database: ${mongoUri}`);
         connected = true;
       } catch (error) {
         retries--;
         if (retries === 0) {
-          console.error('Failed to connect to test database after retries:', error.message);
+          console.error('❌ Failed to connect to test database after retries:', error.message);
+          console.error('Connection URI:', mongoUri);
           throw error;
         }
-        console.log(`MongoDB connection attempt failed, retrying... (${retries} attempts left)`);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log(`⚠️  MongoDB connection attempt failed, retrying... (${retries} attempts left)`);
+        console.log(`   Error: ${error.message}`);
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Increased delay between retries
       }
     }
   }, 90000); // Increase timeout for database connection with retries
