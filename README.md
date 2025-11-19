@@ -234,7 +234,7 @@ VITE_NODE_ENV=development
 4. Add environment variables (especially `VITE_API_URL`)
 5. Deploy!
 
-**Deployed Frontend URL**: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+**Deployed Frontend URL**: [https://deployapp1.netlify.app](https://deployapp1.netlify.app)
 
 See `NETLIFY_DEPLOYMENT.md` for detailed instructions.
 
@@ -452,7 +452,7 @@ Authorization: Bearer <token>
 
 ### 🚀 Live Application
 
-- **Frontend URL**: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+- **Frontend URL**: [https://deployapp1.netlify.app](https://deployapp1.netlify.app)
 - **Backend URL**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
 - **API Health Check**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health)
 - **API Root**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/)
@@ -505,7 +505,7 @@ This project is part of a course assignment.
 ## 🎉 Deployment Complete!
 
 **Live Application:**
-- **Frontend**: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+- **Frontend**: [https://deployapp1.netlify.app](https://deployapp1.netlify.app)
 - **Backend API**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
 - **Health Check**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health)
 

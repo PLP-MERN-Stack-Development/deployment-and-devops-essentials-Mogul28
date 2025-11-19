@@ -83,7 +83,7 @@ If you need to add it manually:
 
 ## Step 7: Test Your Deployment
 
-1. After deployment, your Netlify URL: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+1. After deployment, your Netlify URL: [https://deployapp1.netlify.app](https://deployapp1.netlify.app)
 2. Open the URL in your browser
 3. Test the application:
    - Register a new user

@@ -118,13 +118,14 @@ In Netlify dashboard → Your site → **"Site settings"** → **"Environment va
 2. Update `FRONTEND_URL` environment variable:
    ```
    FRONTEND_URL=https://deployapp1.netlify.app
+   # IMPORTANT: Do NOT include a trailing slash (/) at the end
    ```
 3. Render will auto-redeploy
 
 ### Step 6: Verify Frontend
 
 1. Wait for deployment to complete
-2. Open your Netlify URL: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+2. Open your Netlify URL: [https://deployapp1.netlify.app](https://deployapp1.netlify.app)
 3. Test the application:
    - Register a user
    - Login
@@ -190,7 +191,7 @@ curl -X POST https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/
 
 ### Test Frontend
 
-1. Open: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+1. Open: [https://deployapp1.netlify.app](https://deployapp1.netlify.app)
 2. Register a new user
 3. Login
 4. Create a post
@@ -244,7 +245,7 @@ Monitor: `https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/hea
 
 After deployment, update these in your README:
 
-- **Frontend URL**: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+- **Frontend URL**: [https://deployapp1.netlify.app](https://deployapp1.netlify.app)
 - **Backend URL**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
 - **Health Check**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health)
 

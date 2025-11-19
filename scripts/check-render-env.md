@@ -31,6 +31,7 @@ production
 ```
 https://deployapp1.netlify.app
 ```
+**IMPORTANT**: Do NOT include a trailing slash (`/`) at the end!
 (Update with your actual frontend URL)
 
 ### 5. PORT

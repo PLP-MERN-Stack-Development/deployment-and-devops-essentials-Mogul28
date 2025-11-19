@@ -43,8 +43,27 @@ app.use(helmet());
 app.use(compression());
 
 // CORS configuration
+// Normalize FRONTEND_URL by removing trailing slash to match browser origin
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+const normalizedFrontendUrl = frontendUrl.replace(/\/$/, ''); // Remove trailing slash
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    // Normalize origin by removing trailing slash
+    const normalizedOrigin = origin.replace(/\/$/, '');
+    
+    // Check if origin matches (with or without trailing slash)
+    if (normalizedOrigin === normalizedFrontendUrl) {
+      callback(null, true);
+    } else {
+      // Log for debugging
+      console.warn(`CORS: Origin "${origin}" (normalized: "${normalizedOrigin}") does not match "${normalizedFrontendUrl}"`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };

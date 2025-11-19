@@ -75,7 +75,7 @@ Make sure these are set in Render:
 | `MONGODB_URI` | Your MongoDB connection string | `mongodb+srv://user:pass@cluster.mongodb.net/mern-db?retryWrites=true&w=majority` |
 | `JWT_SECRET` | Your JWT secret | `59d1cf08cb3cd18828e75ac453a2beb7b756f07398960d2a58115823d5d29221` |
 | `NODE_ENV` | `production` | `production` |
-| `FRONTEND_URL` | Your frontend URL | `https://deployapp1.netlify.app` |
+| `FRONTEND_URL` | Your frontend URL (NO trailing slash) | `https://deployapp1.netlify.app` |
 | `PORT` | Usually auto-set by Render | `10000` (Render sets this) |
 
 ### Step 5: Update Network Access in MongoDB Atlas
