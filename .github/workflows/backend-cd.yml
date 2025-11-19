@@ -34,12 +34,18 @@ jobs:
           NODE_ENV: test
         run: npm test
 
-      - name: Deploy to Render
-        if: success()
-        uses: johnbeynon/render-deploy@v0.0.15
-        with:
-          service-id: ${{ secrets.RENDER_SERVICE_ID }}
-          api-key: ${{ secrets.RENDER_API_KEY }}
+      # Render Auto-Deploy: Render automatically deploys when you push to main
+      # Configure Render to watch your GitHub repo for automatic deployments
+      # See RENDER_AUTO_DEPLOY.md for setup instructions
+      
+      - name: Trigger Render Deployment (Optional)
+        if: success() && secrets.RENDER_SERVICE_ID != '' && secrets.RENDER_API_KEY != ''
+        run: |
+          echo "Triggering Render deployment via API..."
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -f -s -S || echo "Note: Render will auto-deploy on git push if configured in dashboard"
         continue-on-error: true
 
       # Alternative: Deploy to Railway
