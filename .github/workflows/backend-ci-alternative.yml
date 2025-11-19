@@ -1,33 +1,21 @@
-name: Backend CI
+name: Backend CI (Alternative with MongoDB Action)
 
 on:
   push:
     branches: [ main, develop ]
     paths:
       - 'backend/**'
-      - '.github/workflows/backend-ci.yml'
+      - '.github/workflows/backend-ci*.yml'
   pull_request:
     branches: [ main, develop ]
     paths:
       - 'backend/**'
-      - '.github/workflows/backend-ci.yml'
+      - '.github/workflows/backend-ci*.yml'
 
 jobs:
   test:
     runs-on: ubuntu-latest
     
-    services:
-      mongodb:
-        image: mongo:7.0
-        ports:
-          - 27017:27017
-        options: >-
-          --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 10
-          --health-start-period 40s
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,6 +27,12 @@ jobs:
           cache: 'npm'
           cache-dependency-path: backend/package-lock.json
 
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.12.0
+        with:
+          mongodb-version: '7.0'
+          mongodb-replica-set: test-rs
+
       - name: Install dependencies
         working-directory: ./backend
         run: npm ci
@@ -47,22 +41,11 @@ jobs:
         working-directory: ./backend
         run: npm run lint || true
 
-      - name: Wait for MongoDB
+      - name: Wait for MongoDB to be ready
         run: |
-          echo "Waiting for MongoDB to be ready..."
-          n=0
-          until [ $n -ge 30 ]; do
-            if timeout 2 bash -c "cat < /dev/null > /dev/tcp/127.0.0.1/27017" 2>/dev/null; then
-              echo "MongoDB is ready!"
-              exit 0
-            fi
-            n=$((n+1))
-            echo "Waiting for MongoDB... ($n/30)"
-            sleep 2
-          done
-          echo "MongoDB connection timeout - checking service status"
-          docker ps | grep mongo || echo "MongoDB container not found"
-          exit 1
+          echo "Waiting for MongoDB..."
+          sleep 5
+          mongosh --eval "db.runCommand({ ping: 1 })" --quiet || sleep 5
 
       - name: Run tests
         working-directory: ./backend

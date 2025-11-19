@@ -39,20 +39,34 @@ describe('Auth Routes', () => {
     // Use MONGODB_URI from environment (set in CI) or fallback to localhost
     const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mern-test';
     
-    try {
-      if (mongoose.connection.readyState === 0) {
-        await mongoose.connect(mongoUri, {
-          maxPoolSize: 5,
-          serverSelectionTimeoutMS: 10000,
-          socketTimeoutMS: 45000,
-        });
-        console.log('Connected to test database');
+    // Retry connection logic for CI environments
+    let retries = 5;
+    let connected = false;
+    
+    while (retries > 0 && !connected) {
+      try {
+        if (mongoose.connection.readyState === 0) {
+          await mongoose.connect(mongoUri, {
+            maxPoolSize: 5,
+            serverSelectionTimeoutMS: 15000,
+            socketTimeoutMS: 45000,
+          });
+          console.log('Connected to test database');
+          connected = true;
+        } else {
+          connected = true;
+        }
+      } catch (error) {
+        retries--;
+        if (retries === 0) {
+          console.error('Failed to connect to test database after retries:', error.message);
+          throw error;
+        }
+        console.log(`MongoDB connection attempt failed, retrying... (${retries} attempts left)`);
+        await new Promise(resolve => setTimeout(resolve, 2000));
       }
-    } catch (error) {
-      console.error('Failed to connect to test database:', error.message);
-      throw error;
     }
-  }, 30000); // Increase timeout for database connection
+  }, 60000); // Increase timeout for database connection with retries
 
   afterAll(async () => {
     try {
