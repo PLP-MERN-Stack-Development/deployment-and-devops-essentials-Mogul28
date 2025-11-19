@@ -39,23 +39,25 @@ describe('Auth Routes', () => {
     // Use MONGODB_URI from environment (set in CI) or fallback to localhost
     const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/mern-test';
     
+    // Close any existing connections first
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.connection.close();
+    }
+    
     // Retry connection logic for CI environments
     let retries = 5;
     let connected = false;
     
     while (retries > 0 && !connected) {
       try {
-        if (mongoose.connection.readyState === 0) {
-          await mongoose.connect(mongoUri, {
-            maxPoolSize: 5,
-            serverSelectionTimeoutMS: 15000,
-            socketTimeoutMS: 45000,
-          });
-          console.log('Connected to test database');
-          connected = true;
-        } else {
-          connected = true;
-        }
+        await mongoose.connect(mongoUri, {
+          maxPoolSize: 5,
+          serverSelectionTimeoutMS: 10000,
+          socketTimeoutMS: 30000,
+          connectTimeoutMS: 10000,
+        });
+        console.log('Connected to test database');
+        connected = true;
       } catch (error) {
         retries--;
         if (retries === 0) {
@@ -63,22 +65,25 @@ describe('Auth Routes', () => {
           throw error;
         }
         console.log(`MongoDB connection attempt failed, retrying... (${retries} attempts left)`);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
     }
-  }, 60000); // Increase timeout for database connection with retries
+  }, 90000); // Increase timeout for database connection with retries
 
   afterAll(async () => {
     try {
       // Clean up
       if (mongoose.connection.readyState === 1) {
         await User.deleteMany({});
-        await mongoose.connection.close();
       }
+      // Close all connections
+      await mongoose.connection.close();
+      // Wait a bit for graceful shutdown
+      await new Promise(resolve => setTimeout(resolve, 500));
     } catch (error) {
       console.error('Error during cleanup:', error.message);
     }
-  }, 10000);
+  }, 15000);
 
   describe('POST /api/auth/register', () => {
     it('should register a new user', async () => {
