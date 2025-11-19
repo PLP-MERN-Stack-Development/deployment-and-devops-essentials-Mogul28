@@ -29,7 +29,7 @@ production
 
 ### 4. FRONTEND_URL
 ```
-https://your-frontend.vercel.app
+https://deployapp1.netlify.app
 ```
 (Update with your actual frontend URL)
 

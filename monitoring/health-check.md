@@ -23,7 +23,7 @@ Use services like:
 - **Pingdom**: https://www.pingdom.com
 - **StatusCake**: https://www.statuscake.com
 
-Configure to check: `https://your-backend-url.com/health`
+Configure to check: `https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health`
 
 ### 2. Error Tracking
 

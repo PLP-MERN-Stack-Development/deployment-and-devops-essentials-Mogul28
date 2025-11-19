@@ -26,7 +26,7 @@ JWT_EXPIRE=7d
 
 # CORS Configuration
 # For local development, use: http://localhost:3000
-# For production, use your frontend URL: https://your-frontend.vercel.app
+# For production, use your frontend URL: https://deployapp1.netlify.app
 FRONTEND_URL=http://localhost:3000
 
 # Rate Limiting
@@ -65,7 +65,7 @@ Create or edit `frontend/.env` with the following variables:
 ```env
 # API Configuration
 # For local development, use: http://localhost:5000
-# For production, use your deployed backend URL: https://your-backend.onrender.com
+# For production, use your deployed backend URL: https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com
 VITE_API_URL=http://localhost:5000
 
 # Environment
@@ -76,7 +76,7 @@ VITE_NODE_ENV=development
 
 When deploying to production, update `VITE_API_URL` to your deployed backend URL:
 ```env
-VITE_API_URL=https://your-backend.onrender.com
+VITE_API_URL=https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com
 ```
 
 ## Quick Setup Commands
@@ -141,7 +141,7 @@ When deploying, set these environment variables in your hosting platform:
 - `FRONTEND_URL` (your deployed frontend URL)
 - `PORT` (usually auto-set by platform)
 
-### Frontend (Vercel/Netlify):
+### Frontend (Netlify):
 - `VITE_API_URL` (your deployed backend URL)
 - `VITE_NODE_ENV=production`
 

@@ -53,7 +53,7 @@ In Render dashboard → Your service → **"Environment"** tab:
 | `NODE_ENV` | `production` | `production` |
 | `MONGODB_URI` | Your MongoDB connection string | `mongodb+srv://user:pass@cluster.mongodb.net/mern-db?retryWrites=true&w=majority` |
 | `JWT_SECRET` | Your JWT secret | `your-secret-key-here` |
-| `FRONTEND_URL` | Your Netlify URL (set after frontend deploy) | `https://your-app.netlify.app` |
+| `FRONTEND_URL` | Your Netlify URL (set after frontend deploy) | `https://deployapp1.netlify.app` |
 | `PORT` | Auto-set by Render | `10000` |
 
 **Important:**
@@ -71,8 +71,8 @@ In Render dashboard → Your service → **"Environment"** tab:
 
 1. Wait for deployment to complete
 2. Check logs for: `MongoDB Connected: cluster0.xxxxx.mongodb.net`
-3. Test health endpoint: `https://your-backend.onrender.com/health`
-4. Save your backend URL: `https://your-backend.onrender.com`
+3. Test health endpoint: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health)
+4. Save your backend URL: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
 
 ## Part 2: Frontend Deployment (Netlify)
 
@@ -99,7 +99,7 @@ In Netlify dashboard → Your site → **"Site settings"** → **"Environment va
 
 | Variable | Value | Example |
 |----------|-------|---------|
-| `VITE_API_URL` | Your Render backend URL | `https://your-backend.onrender.com` |
+| `VITE_API_URL` | Your Render backend URL | `https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com` |
 
 **Important:**
 - Variables must start with `VITE_` to be available in build
@@ -117,14 +117,14 @@ In Netlify dashboard → Your site → **"Site settings"** → **"Environment va
 1. Go back to Render dashboard
 2. Update `FRONTEND_URL` environment variable:
    ```
-   FRONTEND_URL=https://your-app.netlify.app
+   FRONTEND_URL=https://deployapp1.netlify.app
    ```
 3. Render will auto-redeploy
 
 ### Step 6: Verify Frontend
 
 1. Wait for deployment to complete
-2. Open your Netlify URL: `https://your-app.netlify.app`
+2. Open your Netlify URL: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
 3. Test the application:
    - Register a user
    - Login
@@ -180,17 +180,17 @@ If you want to trigger deployments via GitHub Actions:
 
 ```bash
 # Health check
-curl https://your-backend.onrender.com/health
+curl https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health
 
 # Register user
-curl -X POST https://your-backend.onrender.com/api/auth/register \
+curl -X POST https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/api/auth/register \
   -H "Content-Type: application/json" \
   -d '{"name":"Test","email":"test@example.com","password":"password123"}'
 ```
 
 ### Test Frontend
 
-1. Open: `https://your-app.netlify.app`
+1. Open: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
 2. Register a new user
 3. Login
 4. Create a post
@@ -200,7 +200,7 @@ curl -X POST https://your-backend.onrender.com/api/auth/register \
 
 ### Health Checks
 
-- **Backend**: `https://your-backend.onrender.com/health`
+- **Backend**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health)
 - **Frontend**: Check Netlify dashboard for build status
 
 ### Uptime Monitoring
@@ -210,7 +210,7 @@ Set up with:
 - [Pingdom](https://www.pingdom.com)
 - [StatusCake](https://www.statuscake.com)
 
-Monitor: `https://your-backend.onrender.com/health`
+Monitor: `https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health`
 
 ## Troubleshooting
 
@@ -244,9 +244,9 @@ Monitor: `https://your-backend.onrender.com/health`
 
 After deployment, update these in your README:
 
-- **Frontend URL**: `https://your-app.netlify.app`
-- **Backend URL**: `https://your-backend.onrender.com`
-- **Health Check**: `https://your-backend.onrender.com/health`
+- **Frontend URL**: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+- **Backend URL**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
+- **Health Check**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health)
 
 ## Success Checklist
 

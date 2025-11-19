@@ -7,7 +7,7 @@ This guide will help you deploy your React frontend to Netlify, configured to wo
 ## Prerequisites
 
 - ✅ Backend deployed on Render (see `RENDER_AUTO_DEPLOY.md`)
-- ✅ Backend URL from Render (e.g., `https://your-backend.onrender.com`)
+- ✅ Backend URL from Render: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
 - ✅ GitHub repository with frontend code
 
 ## Step 1: Create Netlify Account
@@ -48,7 +48,7 @@ This guide will help you deploy your React frontend to Netlify, configured to wo
 3. Click **"Add variable"**
 4. Add:
    - **Key**: `VITE_API_URL`
-   - **Value**: Your Render backend URL (e.g., `https://your-backend.onrender.com`)
+   - **Value**: `https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com`
    - **Scopes**: Select "All scopes" or "Production, Deploy previews, Branch deploys"
 5. Click **"Save"**
 
@@ -83,7 +83,7 @@ If you need to add it manually:
 
 ## Step 7: Test Your Deployment
 
-1. After deployment, Netlify will provide a URL like: `https://your-app.netlify.app`
+1. After deployment, your Netlify URL: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
 2. Open the URL in your browser
 3. Test the application:
    - Register a new user
@@ -98,7 +98,7 @@ Make sure your Render backend allows requests from your Netlify frontend:
 1. In Render dashboard → Your backend service → **"Environment"**
 2. Update `FRONTEND_URL` to your Netlify URL:
    ```
-   FRONTEND_URL=https://your-app.netlify.app
+   FRONTEND_URL=https://deployapp1.netlify.app
    ```
 3. Redeploy the backend
 
@@ -114,7 +114,7 @@ Make sure your Render backend allows requests from your Netlify frontend:
 
 | Variable | Value | Example |
 |----------|-------|---------|
-| `VITE_API_URL` | Your Render backend URL | `https://your-backend.onrender.com` |
+| `VITE_API_URL` | Your Render backend URL | `https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com` |
 
 ## Build Settings Reference
 

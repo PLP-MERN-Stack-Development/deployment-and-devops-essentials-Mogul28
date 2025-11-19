@@ -24,7 +24,7 @@ Use this checklist to ensure all deployment tasks are completed.
 
 ## ✅ Frontend Deployment
 
-- [ ] Account created on deployment platform (Vercel/Netlify/GitHub Pages)
+- [ ] Account created on deployment platform (Netlify/GitHub Pages)
 - [ ] Frontend project created and configured
 - [ ] Environment variables set (especially `VITE_API_URL`)
 - [ ] Build settings configured
@@ -42,7 +42,7 @@ Use this checklist to ensure all deployment tasks are completed.
   - [ ] `MONGODB_URI`
   - [ ] `JWT_SECRET`
   - [ ] `VITE_API_URL`
-  - [ ] Platform-specific secrets (Render/Railway/Heroku/Vercel/Netlify)
+  - [ ] Platform-specific secrets (Render/Railway/Heroku/Netlify)
 - [ ] CI pipeline runs successfully on push/PR
 - [ ] CD pipeline deploys automatically on main branch
 - [ ] Screenshots taken of CI/CD pipeline

@@ -95,7 +95,6 @@ A full-stack MERN (MongoDB, Express, React, Node.js) application with complete C
 │       └── frontend-cd.yml      # Frontend CD pipeline
 ├── deployment/
 │   ├── render.yaml              # Render deployment config
-│   ├── vercel.json              # Vercel deployment config
 │   ├── netlify.toml             # Netlify deployment config
 │   └── railway.json             # Railway deployment config
 ├── monitoring/
@@ -116,7 +115,7 @@ A full-stack MERN (MongoDB, Express, React, Node.js) application with complete C
 - **GitHub** account
 - Accounts for deployment platforms:
   - Backend: Render, Railway, or Heroku
-  - Frontend: Vercel, Netlify, or GitHub Pages
+  - Frontend: Netlify or GitHub Pages
 
 ## 🚀 Local Development Setup
 
@@ -201,7 +200,7 @@ VITE_NODE_ENV=development
 5. Add environment variables from your `.env` file
 6. Deploy!
 
-**Deployed Backend URL**: `https://your-app.onrender.com`
+**Deployed Backend URL**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
 
 #### Option 2: Railway
 
@@ -235,25 +234,11 @@ VITE_NODE_ENV=development
 4. Add environment variables (especially `VITE_API_URL`)
 5. Deploy!
 
-**Deployed Frontend URL**: `https://your-app.netlify.app`
+**Deployed Frontend URL**: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
 
 See `NETLIFY_DEPLOYMENT.md` for detailed instructions.
 
-#### Option 2: Vercel
-
-1. Create account at [Vercel](https://vercel.com)
-2. Import your GitHub repository
-3. Configure:
-   - **Framework Preset**: Vite
-   - **Root Directory**: `frontend`
-   - **Build Command**: `npm run build`
-   - **Output Directory**: `dist`
-4. Add environment variables
-5. Deploy!
-
-**Deployed Frontend URL**: `https://your-app.vercel.app`
-
-#### Option 3: GitHub Pages
+#### Option 2: GitHub Pages
 
 1. Update `vite.config.js` with base path
 2. Install gh-pages: `npm install -D gh-pages`
@@ -290,7 +275,7 @@ The project includes GitHub Actions workflows for continuous integration and dep
 - **Frontend CD** (`.github/workflows/frontend-cd.yml`):
   - Runs on push to main
   - Builds application
-  - Deploys to Netlify (or Vercel)
+  - Deploys to Netlify
 
 ### Setting Up GitHub Secrets
 
@@ -305,12 +290,9 @@ Add these secrets in your GitHub repository settings:
 - `HEROKU_API_KEY`: Heroku API key (if using Heroku)
 
 **Frontend Secrets:**
-- `VITE_API_URL`: Your deployed backend URL (e.g., `https://your-backend.onrender.com`)
+- `VITE_API_URL`: Your deployed backend URL (e.g., `https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com`)
 - `NETLIFY_AUTH_TOKEN`: Netlify auth token (optional - for GitHub Actions deployment)
 - `NETLIFY_SITE_ID`: Netlify site ID (optional - for GitHub Actions deployment)
-- `VERCEL_TOKEN`: Vercel token (if using Vercel instead)
-- `VERCEL_ORG_ID`: Vercel organization ID (if using Vercel)
-- `VERCEL_PROJECT_ID`: Vercel project ID (if using Vercel)
 
 ## 📊 Monitoring
 
@@ -319,7 +301,7 @@ Add these secrets in your GitHub repository settings:
 The backend includes a health check at `/health`:
 
 ```bash
-curl https://your-backend-url.com/health
+curl https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health
 ```
 
 Response:
@@ -350,7 +332,7 @@ Set up uptime monitoring with:
 - [Pingdom](https://www.pingdom.com)
 - [StatusCake](https://www.statuscake.com)
 
-Monitor: `https://your-backend-url.com/health`
+Monitor: `https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health`
 
 See `monitoring/health-check.md` for detailed setup instructions.
 
@@ -463,17 +445,17 @@ Authorization: Bearer <token>
    - Heroku: `heroku rollback`
 
 2. **Frontend Rollback**
-   - Vercel: Use deployment history
    - Netlify: Revert to previous deployment
    - GitHub Pages: Revert commit
 
 ## 📝 Deployment URLs
 
-After deployment, update this section with your URLs:
+### 🚀 Live Application
 
-- **Frontend URL**: `https://your-app.netlify.app`
-- **Backend URL**: `https://your-backend.onrender.com`
-- **API Health Check**: `https://your-backend.onrender.com/health`
+- **Frontend URL**: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+- **Backend URL**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
+- **API Health Check**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health)
+- **API Root**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/)
 
 ## 🚀 Quick Deployment Guide
 
@@ -515,9 +497,16 @@ This project is part of a course assignment.
 
 - MongoDB Atlas for database hosting
 - Render/Railway/Heroku for backend hosting
-- Vercel/Netlify for frontend hosting
+- Netlify for frontend hosting
 - GitHub Actions for CI/CD
 
 ---
 
-**Note**: Remember to update the deployment URLs and add screenshots of your CI/CD pipeline before submission!
+## 🎉 Deployment Complete!
+
+**Live Application:**
+- **Frontend**: [https://deployapp1.netlify.app/](https://deployapp1.netlify.app/)
+- **Backend API**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com)
+- **Health Check**: [https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health](https://deployment-and-devops-essentials-mogul28-mm0n.onrender.com/health)
+
+**Note**: Remember to add screenshots of your CI/CD pipeline before submission!
