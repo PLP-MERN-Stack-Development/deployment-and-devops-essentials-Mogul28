@@ -1,12 +1,14 @@
 # 🔧 GitHub Actions MongoDB Connection Fix
 
 ## Problem
-Tests were failing in CI because MongoDB wasn't ready when tests tried to connect, resulting in connection refused errors.
+Tests were failing in CI/CD workflows because MongoDB wasn't ready when tests tried to connect, resulting in connection refused errors (ECONNREFUSED).
 
 ## Solutions Applied
 
 ### 1. Improved MongoDB Service Configuration
-**File**: `.github/workflows/backend-ci.yml`
+**Files**: 
+- `.github/workflows/backend-ci.yml` (CI workflow)
+- `.github/workflows/backend-cd.yml` (CD workflow)
 
 - ✅ Increased health check retries from 10 to 20
 - ✅ Reduced health check interval from 10s to 5s for faster detection
@@ -14,7 +16,9 @@ Tests were failing in CI because MongoDB wasn't ready when tests tried to connec
 - ✅ Added `MONGO_INITDB_DATABASE` environment variable
 
 ### 2. Enhanced Wait Step
-**File**: `.github/workflows/backend-ci.yml`
+**Files**: 
+- `.github/workflows/backend-ci.yml`
+- `.github/workflows/backend-cd.yml`
 
 - ✅ Replaced complex bash redirection with reliable `nc` (netcat) command
 - ✅ Installs netcat if not available
@@ -68,11 +72,21 @@ MONGODB_URI=mongodb://127.0.0.1:27017/mern-test npm test
 
 ## Verification
 
-After these changes, the CI workflow should:
+After these changes, both CI and CD workflows should:
 - ✅ Successfully start MongoDB service
 - ✅ Wait for MongoDB to be fully ready
 - ✅ Connect to MongoDB in tests
 - ✅ Run all tests successfully
+
+## Important Note
+
+The `backend-cd.yml` workflow now uses a **local MongoDB service container** for tests instead of the production MongoDB Atlas URI from secrets. This ensures:
+- Tests run against a clean, isolated database
+- No risk of affecting production data
+- Faster test execution
+- Consistent test environment
+
+The production MongoDB URI from secrets is only used when deploying to Render, not during tests.
 
 ## Next Steps
 
